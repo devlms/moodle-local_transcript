@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-
 namespace local_transcript\local;
 
 /**
@@ -79,6 +78,7 @@ class collector {
      * @return string|null
      */
     private static function grade(int $courseid, int $userid): ?string {
+        grade_regrade_final_grades_if_required(get_course($courseid));
         $item = \grade_item::fetch_course_item($courseid);
         $grade = $item->get_grade($userid, false);
         if (!$grade || $grade->finalgrade === null) {

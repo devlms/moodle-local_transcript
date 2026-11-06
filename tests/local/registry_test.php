@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-
 namespace local_transcript\local;
 
 /**
@@ -95,7 +94,8 @@ final class registry_test extends \advanced_testcase {
         $v = registry::verify($t->code);
         $this->assertSame(registry::REVOKED, $v->status);
         $this->assertSame('Issued with the wrong name', $v->record->revokedreason);
-        $this->assertCount(1, array_filter($sink->get_events(), fn($e) => $e instanceof \local_transcript\event\transcript_revoked));
+        $revoked = fn($e) => $e instanceof \local_transcript\event\transcript_revoked;
+        $this->assertCount(1, array_filter($sink->get_events(), $revoked));
         $this->assertSame(registry::UNKNOWN, registry::verify('AAAA-BBBB-CCCC')->status);
         $this->assertSame(registry::UNKNOWN, registry::verify('')->status);
     }

@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * Version information for local_transcript.
  *
@@ -26,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'local_transcript';
-$plugin->version = 2026110600;
+$plugin->version = 2026110601;
 $plugin->requires = 2024100700;
 $plugin->supported = [405, 503];
 $plugin->maturity = MATURITY_ALPHA;
