@@ -32,7 +32,8 @@ require_once(__DIR__ . '/../../config.php');
 $code = optional_param('code', '', PARAM_ALPHANUMEXT);
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(new moodle_url('/local/transcript/verify.php', $code !== '' ? ['code' => $code] : []));
-$PAGE->set_pagelayout('popup');
+$PAGE->set_pagelayout('standard');
+$PAGE->set_heading(format_string($SITE->fullname));
 $PAGE->set_title(get_string('verify', 'local_transcript'));
 
 echo $OUTPUT->header();

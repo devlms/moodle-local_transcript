@@ -108,8 +108,22 @@ final class collector_test extends \advanced_testcase {
     public function test_institution_name_defaults_to_the_site_name(): void {
         $this->resetAfterTest();
         $u = $this->getDataGenerator()->create_user();
-        $this->assertSame(format_string(get_site()->fullname), collector::collect($u->id)['institution']);
+        $this->assertSame(format_string(get_site()->fullname, true, ['escape' => false]), collector::collect($u->id)['institution']);
         set_config('institution', 'Northfield College', 'local_transcript');
         $this->assertSame('Northfield College', collector::collect($u->id)['institution']);
+    }
+
+    public function test_names_are_stored_as_plain_text_not_html(): void {
+        $this->resetAfterTest();
+        set_config('institution', 'Arts & Sciences College', 'local_transcript');
+        $u = $this->getDataGenerator()->create_user(['firstname' => "D'Arcy", 'lastname' => 'Neil']);
+        $this->course_for($u, 'A&S1', 70, 1735689600);
+
+        $data = collector::collect($u->id);
+
+        $this->assertSame('A&S1', $data['courses'][0]['shortname']);
+        $this->assertSame('Course A&S1', $data['courses'][0]['fullname']);
+        $this->assertSame('Arts & Sciences College', $data['institution']);
+        $this->assertStringContainsString("D'Arcy", $data['student']['fullname']);
     }
 }

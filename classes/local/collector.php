@@ -53,8 +53,8 @@ class collector {
             }
             $context = \context_course::instance($course->id);
             $courses[] = [
-                'shortname' => format_string($course->shortname, true, ['context' => $context]),
-                'fullname' => format_string($course->fullname, true, ['context' => $context]),
+                'shortname' => format_string($course->shortname, true, ['context' => $context, 'escape' => false]),
+                'fullname' => format_string($course->fullname, true, ['context' => $context, 'escape' => false]),
                 'completed' => $completed,
                 'grade' => $showgrades && $grade !== null ? $grade : '',
             ];
@@ -64,7 +64,7 @@ class collector {
 
         $institution = trim((string) get_config('local_transcript', 'institution'));
         return [
-            'institution' => $institution !== '' ? $institution : format_string(get_site()->fullname),
+            'institution' => $institution !== '' ? $institution : format_string(get_site()->fullname, true, ['escape' => false]),
             'student' => ['fullname' => fullname($user), 'idnumber' => (string) $user->idnumber],
             'courses' => $courses,
         ];
