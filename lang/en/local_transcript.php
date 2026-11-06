@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['altered'] = 'This record has been changed since it was issued. Do not trust it.';
 $string['alteredtitle'] = 'Altered record';
+$string['checkonline'] = 'Check online';
 $string['code'] = 'Verification code';
 $string['code_help'] = 'The 12 character code printed on the transcript, for example K7QM-4XRT-9HCP.';
 $string['completed'] = 'Completed';

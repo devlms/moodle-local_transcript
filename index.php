@@ -62,7 +62,7 @@ if ($rows) {
             new moodle_url('/local/transcript/download.php', ['id' => $r->id]),
             get_string('download', 'local_transcript')
         ),
-            html_writer::link(registry::verify_url($r->code), get_string('verify', 'local_transcript'))];
+            html_writer::link(registry::verify_url($r->code), get_string('checkonline', 'local_transcript'))];
         if ($manage && !$r->timerevoked) {
             $actions[] = html_writer::link(
                 new moodle_url('/local/transcript/revoke.php', ['id' => $r->id]),

@@ -32,7 +32,7 @@ Feature: Issue a transcript and let anyone verify it
     And I press "Issue a transcript"
     And I click on "Yes" "button" in the "Confirmation" "dialogue"
     Then I should see "Transcript issued. Its code is"
-    And I click on "Verify a transcript" "link" in the "generaltable" "table"
+    And I click on "Check online" "link" in the "generaltable" "table"
     Then I should see "Valid"
     And I should see "This transcript was issued by Northfield College"
     And I should see "88.00"
@@ -43,7 +43,7 @@ Feature: Issue a transcript and let anyone verify it
     And I click on "Revoke" "link"
     And I set the field "Reason (kept for staff, not shown on the verify page)" to "Wrong programme"
     And I press "Revoke"
-    And I click on "Verify a transcript" "link" in the "generaltable" "table"
+    And I click on "Check online" "link" in the "generaltable" "table"
     Then I should see "This transcript was revoked on"
     And I should not see "Wrong programme"
     And I log out
