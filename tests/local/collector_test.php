@@ -108,7 +108,8 @@ final class collector_test extends \advanced_testcase {
     public function test_institution_name_defaults_to_the_site_name(): void {
         $this->resetAfterTest();
         $u = $this->getDataGenerator()->create_user();
-        $this->assertSame(format_string(get_site()->fullname, true, ['escape' => false]), collector::collect($u->id)['institution']);
+        $site = format_string(get_site()->fullname, true, ['escape' => false]);
+        $this->assertSame($site, collector::collect($u->id)['institution']);
         set_config('institution', 'Northfield College', 'local_transcript');
         $this->assertSame('Northfield College', collector::collect($u->id)['institution']);
     }
