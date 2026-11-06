@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
-
 namespace local_transcript\event;
 
 use local_transcript\local\registry;
@@ -54,6 +53,8 @@ final class events_test extends \advanced_testcase {
     }
 
     /**
+     * The profile link shows for the student themselves and for managers looking at anyone.
+     *
      * @covers ::local_transcript_myprofile_navigation
      */
     public function test_profile_link_for_the_student_and_for_managers_only(): void {
