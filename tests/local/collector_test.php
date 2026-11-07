@@ -16,6 +16,7 @@
 
 namespace local_transcript\local;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\local\collector::class)]
 /**
  * Tests for the transcript collector: which courses go on a transcript, with what grade and date.
  *

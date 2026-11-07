@@ -22,6 +22,7 @@ use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 use local_transcript\local\registry;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\privacy\provider::class)]
 /**
  * Privacy provider tests.
  *

@@ -18,6 +18,9 @@ namespace local_transcript\event;
 
 use local_transcript\local\registry;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\event\transcript_issued::class)]
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\event\transcript_revoked::class)]
+#[\PHPUnit\Framework\Attributes\CoversFunction('local_transcript_myprofile_navigation')]
 /**
  * Tests for the issue and revoke events, and the profile link.
  *
@@ -26,6 +29,7 @@ use local_transcript\local\registry;
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @covers     \local_transcript\event\transcript_issued
  * @covers     \local_transcript\event\transcript_revoked
+ * @covers     ::local_transcript_myprofile_navigation
  */
 final class events_test extends \advanced_testcase {
     public function test_events_describe_who_did_what(): void {
@@ -54,8 +58,6 @@ final class events_test extends \advanced_testcase {
 
     /**
      * The profile link shows for the student themselves and for managers looking at anyone.
-     *
-     * @covers ::local_transcript_myprofile_navigation
      */
     public function test_profile_link_for_the_student_and_for_managers_only(): void {
         global $CFG;

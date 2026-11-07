@@ -16,6 +16,7 @@
 
 namespace local_transcript\output;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\output\transcript::class)]
 /**
  * Tests for the transcript template context.
  *

@@ -16,6 +16,7 @@
 
 namespace local_transcript\local;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\local\pdf::class)]
 /**
  * Tests for the transcript PDF.
  *

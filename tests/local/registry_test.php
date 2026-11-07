@@ -16,6 +16,7 @@
 
 namespace local_transcript\local;
 
+#[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\local\registry::class)]
 /**
  * Tests for issuing, verifying and revoking transcripts.
  *
