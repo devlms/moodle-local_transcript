@@ -18,6 +18,12 @@ namespace local_transcript\event;
 
 use local_transcript\local\registry;
 
+defined('MOODLE_INTERNAL') || die();
+
+global $CFG;
+// Coverage resolves CoversFunction before any test runs, so the functions must be loaded here.
+require_once($CFG->dirroot . '/local/transcript/lib.php');
+
 #[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\event\transcript_issued::class)]
 #[\PHPUnit\Framework\Attributes\CoversClass(\local_transcript\event\transcript_revoked::class)]
 #[\PHPUnit\Framework\Attributes\CoversFunction('local_transcript_myprofile_navigation')]
