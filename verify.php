@@ -55,7 +55,7 @@ if ($code !== '') {
     $title = get_string($v->status . 'title', 'local_transcript');
     switch ($v->status) {
         case registry::VALID:
-            $msg = get_string('valid', 'local_transcript', ['institution' => s($v->data['institution']),
+            $msg = get_string('valid', 'local_transcript', ['institution' => $v->data['institution'],
                 'date' => userdate($v->record->timecreated, get_string('strftimedate', 'langconfig'))]);
             $type = 'success';
             break;
@@ -72,14 +72,12 @@ if ($code !== '') {
             $msg = get_string('unknown', 'local_transcript');
             $type = 'warning';
     }
-    echo $OUTPUT->notification(html_writer::tag('strong', $title) . ' ' . $msg, $type, false);
+    $status = ['state' => $v->status, 'isvalid' => $v->status === registry::VALID, 'title' => $title, 'message' => $msg];
     // Revoked or altered transcripts show their status only, never the contents.
-    if ($v->status === registry::VALID) {
-        echo $OUTPUT->render_from_template(
-            'local_transcript/transcript',
-            transcript::context($v->data, $v->record->code, (int) $v->record->timecreated)
-        );
-    }
+    $context = $v->status === registry::VALID
+        ? transcript::context($v->data, $v->record->code, (int) $v->record->timecreated) + ['statusonly' => false]
+        : ['statusonly' => true];
+    echo $OUTPUT->render_from_template('local_transcript/transcript', $context + ['status' => $status]);
 }
 
 echo $OUTPUT->footer();

@@ -17,36 +17,56 @@
 {{!
     @template local_transcript/transcript
 
-    One transcript: institution, student, courses with grade and completion date.
+    One transcript as a document: institution, student, courses with completion date and grade. On the verify page
+    it opens with the verdict (status), and for revoked, altered or unknown codes shows the verdict only (statusonly).
 
     Example context (json):
     {
         "institution": "Northfield College", "fullname": "Ines Duarte", "idnumber": "S-1001", "hasidnumber": true,
         "code": "K7QM-4XRT-9HCP", "issued": "6 November 2026", "showgrades": true, "hascourses": true,
-        "courses": [{"shortname": "BIO1", "fullname": "Biology 1", "completed": "1 January 2026", "grade": "88.00"}]
+        "courses": [{"shortname": "BIO1", "fullname": "Biology 1", "completed": "1 January 2026", "grade": "88.00"}],
+        "status": {"state": "valid", "isvalid": true, "title": "Valid", "message": "Issued by Northfield College on 6 November 2026."},
+        "statusonly": false
     }
 }}
-<div class="local-transcript">
-    <h3 class="h5 mb-1">{{institution}}</h3>
-    <dl class="row mb-2">
-        <dt class="col-sm-3">{{#str}}student, local_transcript{{/str}}</dt><dd class="col-sm-9">{{fullname}}</dd>
-        {{#hasidnumber}}<dt class="col-sm-3">{{#str}}studentid, local_transcript{{/str}}</dt><dd class="col-sm-9">{{idnumber}}</dd>{{/hasidnumber}}
-        {{#code}}<dt class="col-sm-3">{{#str}}code, local_transcript{{/str}}</dt><dd class="col-sm-9"><code>{{code}}</code></dd>{{/code}}
-        {{#issued}}<dt class="col-sm-3">{{#str}}issuedon, local_transcript{{/str}}</dt><dd class="col-sm-9">{{issued}}</dd>{{/issued}}
-    </dl>
-    {{#hascourses}}
-    <table class="table table-sm generaltable">
-        <thead><tr>
-            <th scope="col">{{#str}}course, local_transcript{{/str}}</th>
-            {{#showgrades}}<th scope="col">{{#str}}grade, local_transcript{{/str}}</th>{{/showgrades}}
-            <th scope="col">{{#str}}completed, local_transcript{{/str}}</th>
-        </tr></thead>
-        <tbody>
-        {{#courses}}
-            <tr><td><strong>{{shortname}}</strong> {{fullname}}</td>{{#showgrades}}<td>{{grade}}</td>{{/showgrades}}<td>{{completed}}</td></tr>
-        {{/courses}}
-        </tbody>
-    </table>
-    {{/hascourses}}
-    {{^hascourses}}<p>{{#str}}nocourses, local_transcript{{/str}}</p>{{/hascourses}}
-</div>
+<article class="local-transcript-sheet{{#status}} is-{{state}}{{/status}}">
+    {{#status}}
+    <header class="local-transcript-verdict" role="status">
+        <span class="local-transcript-seal" aria-hidden="true">{{#isvalid}}{{#pix}}i/checked, core{{/pix}}{{/isvalid}}{{^isvalid}}{{#pix}}i/warning, core{{/pix}}{{/isvalid}}</span>
+        <div>
+            <p class="local-transcript-verdict-title">{{title}}</p>
+            <p class="local-transcript-verdict-text">{{message}}</p>
+        </div>
+    </header>
+    {{/status}}
+    {{^statusonly}}
+    <div class="local-transcript">
+        <p class="local-transcript-issuer">{{institution}}</p>
+        <h3 class="local-transcript-student">{{fullname}}</h3>
+        <dl class="local-transcript-facts">
+            {{#hasidnumber}}<div><dt>{{#str}}studentid, local_transcript{{/str}}</dt><dd>{{idnumber}}</dd></div>{{/hasidnumber}}
+            {{#issued}}<div><dt>{{#str}}issuedon, local_transcript{{/str}}</dt><dd>{{issued}}</dd></div>{{/issued}}
+            {{#code}}<div><dt>{{#str}}code, local_transcript{{/str}}</dt><dd class="local-transcript-code">{{code}}</dd></div>{{/code}}
+        </dl>
+        {{#hascourses}}
+        <table class="local-transcript-courses">
+            <thead><tr>
+                <th scope="col">{{#str}}course, local_transcript{{/str}}</th>
+                <th scope="col">{{#str}}completed, local_transcript{{/str}}</th>
+                {{#showgrades}}<th scope="col" class="is-num">{{#str}}grade, local_transcript{{/str}}</th>{{/showgrades}}
+            </tr></thead>
+            <tbody>
+            {{#courses}}
+                <tr>
+                    <td><span class="local-transcript-short">{{shortname}}</span> {{fullname}}</td>
+                    <td>{{completed}}</td>
+                    {{#showgrades}}<td class="is-num">{{grade}}</td>{{/showgrades}}
+                </tr>
+            {{/courses}}
+            </tbody>
+        </table>
+        {{/hascourses}}
+        {{^hascourses}}<p>{{#str}}nocourses, local_transcript{{/str}}</p>{{/hascourses}}
+    </div>
+    {{/statusonly}}
+</article>

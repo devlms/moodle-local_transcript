@@ -1,0 +1,162 @@
+/* Transcripts: the record reads as a document. Scoped to .local-transcript-sheet. */
+.local-transcript-sheet {
+    max-width: 46rem;
+    margin: 1.5rem 0 2rem;
+    border: 1px solid #d5d9de;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 0 #e9ecef, 0 12px 28px -18px rgba(29, 33, 37, .35);
+}
+
+.local-transcript-verdict {
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #d5d9de;
+    border-left: 6px solid #6a737b;
+}
+
+.local-transcript-sheet.is-valid .local-transcript-verdict {
+    border-left-color: #357a32;
+    background: #f4faf3;
+}
+
+.local-transcript-sheet.is-revoked .local-transcript-verdict,
+.local-transcript-sheet.is-altered .local-transcript-verdict {
+    border-left-color: #ca3120;
+    background: #fdf3f2;
+}
+
+.local-transcript-sheet.is-unknown .local-transcript-verdict {
+    border-left-color: #b26b00;
+    background: #fdf8ef;
+}
+
+.local-transcript-sheet.is-revoked,
+.local-transcript-sheet.is-altered,
+.local-transcript-sheet.is-unknown {
+    max-width: 36rem;
+}
+
+.local-transcript-seal {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    color: #6a737b;
+}
+
+.local-transcript-sheet.is-valid .local-transcript-seal {
+    color: #357a32;
+}
+
+.local-transcript-sheet.is-revoked .local-transcript-seal,
+.local-transcript-sheet.is-altered .local-transcript-seal {
+    color: #ca3120;
+}
+
+.local-transcript-seal .icon {
+    margin: 0;
+    /* Core gives i/warning the text-warning colour with !important; the seal colour must win. */
+    color: inherit !important;
+}
+
+.local-transcript-verdict-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.local-transcript-verdict-text {
+    margin: .2rem 0 0;
+    color: #343a40;
+}
+
+.local-transcript-sheet .local-transcript {
+    padding: 1.5rem 1.5rem 1.25rem;
+}
+
+.local-transcript-issuer {
+    margin: 0 0 1rem;
+    padding-bottom: .6rem;
+    border-bottom: 2px solid #1d2125;
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+
+.local-transcript-student {
+    margin: 0 0 .75rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.local-transcript-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 2.25rem;
+    margin: 0 0 1.25rem;
+}
+
+.local-transcript-facts dt {
+    color: #5b6269;
+    font-size: .8125rem;
+    font-weight: 400;
+}
+
+.local-transcript-facts dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.local-transcript-code {
+    font-family: SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    letter-spacing: .08em;
+}
+
+.local-transcript-courses {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.local-transcript-courses th {
+    padding: .4rem .5rem .4rem 0;
+    border-bottom: 1px solid #1d2125;
+    color: #5b6269;
+    font-size: .8125rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.local-transcript-courses td {
+    padding: .55rem .5rem .55rem 0;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: top;
+}
+
+.local-transcript-courses .is-num {
+    padding-right: 0;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.local-transcript-short {
+    margin-right: .35rem;
+    color: #5b6269;
+    font-size: .875rem;
+    font-weight: 600;
+}
+
+@media (max-width: 575px) {
+    .local-transcript-sheet .local-transcript,
+    .local-transcript-verdict {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+}
