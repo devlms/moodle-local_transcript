@@ -62,8 +62,6 @@
 
 .local-transcript-seal .icon {
     margin: 0;
-    /* Core gives i/warning the text-warning colour with !important; the seal colour must win. */
-    color: inherit !important;
 }
 
 .local-transcript-verdict-title {

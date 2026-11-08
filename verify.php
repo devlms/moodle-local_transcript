@@ -72,7 +72,9 @@ if ($code !== '') {
             $msg = get_string('unknown', 'local_transcript');
             $type = 'warning';
     }
-    $status = ['state' => $v->status, 'isvalid' => $v->status === registry::VALID, 'title' => $title, 'message' => $msg];
+    $status = ['state' => $v->status, 'isvalid' => $v->status === registry::VALID,
+        'isbad' => in_array($v->status, [registry::REVOKED, registry::ALTERED], true),
+        'isunknown' => $v->status === registry::UNKNOWN, 'title' => $title, 'message' => $msg];
     // Revoked or altered transcripts show their status only, never the contents.
     $context = $v->status === registry::VALID
         ? transcript::context($v->data, $v->record->code, (int) $v->record->timecreated) + ['statusonly' => false]

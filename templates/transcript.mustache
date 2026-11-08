@@ -25,15 +25,15 @@
         "institution": "Northfield College", "fullname": "Ines Duarte", "idnumber": "S-1001", "hasidnumber": true,
         "code": "K7QM-4XRT-9HCP", "issued": "6 November 2026", "showgrades": true, "hascourses": true,
         "courses": [{"shortname": "BIO1", "fullname": "Biology 1", "completed": "1 January 2026", "grade": "88.00"}],
-        "status": {"state": "valid", "isvalid": true, "title": "Valid", "message": "Issued by Northfield College on 6 November 2026."},
+        "status": {"state": "valid", "isvalid": true, "isbad": false, "isunknown": false, "title": "Valid", "message": "Issued by Northfield College on 6 November 2026."},
         "statusonly": false
     }
 }}
 <article class="local-transcript-sheet{{#status}} is-{{state}}{{/status}}">
     {{#status}}
-    <header class="local-transcript-verdict" role="status">
-        <span class="local-transcript-seal" aria-hidden="true">{{#isvalid}}{{#pix}}i/checked, core{{/pix}}{{/isvalid}}{{^isvalid}}{{#pix}}i/warning, core{{/pix}}{{/isvalid}}</span>
-        <div>
+    <header class="local-transcript-verdict">
+        <span class="local-transcript-seal" aria-hidden="true">{{#isvalid}}{{#pix}}i/checked, core{{/pix}}{{/isvalid}}{{#isbad}}{{#pix}}i/invalid, core{{/pix}}{{/isbad}}{{#isunknown}}{{#pix}}i/warning, core{{/pix}}{{/isunknown}}</span>
+        <div role="status">
             <p class="local-transcript-verdict-title">{{title}}</p>
             <p class="local-transcript-verdict-text">{{message}}</p>
         </div>
