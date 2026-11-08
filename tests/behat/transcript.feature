@@ -46,6 +46,7 @@ Feature: Issue a transcript and let anyone verify it
     And I click on "Check online" "link" in the "generaltable" "table"
     Then I should see "This transcript was revoked on"
     And I should not see "Wrong programme"
+    And I should not see "Biology 1"
     And I log out
     And I visit "/local/transcript/manage.php"
     Then I should see "Log in"

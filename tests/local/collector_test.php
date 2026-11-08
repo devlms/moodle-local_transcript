@@ -128,4 +128,20 @@ final class collector_test extends \advanced_testcase {
         $this->assertSame('Arts & Sciences College', $data['institution']);
         $this->assertStringContainsString("D'Arcy", $data['student']['fullname']);
     }
+
+    public function test_hidden_grades_stay_off(): void {
+        global $DB;
+        $this->resetAfterTest();
+        $u = $this->getDataGenerator()->create_user();
+        $hiddentotal = $this->course_for($u, 'HID1', 70, 1735689600);
+        \grade_item::fetch_course_item($hiddentotal->id)->set_hidden(1);
+        $nogrades = $this->course_for($u, 'HID2', 80, 1735689601);
+        $DB->set_field('course', 'showgrades', 0, ['id' => $nogrades->id]);
+        $shown = $this->course_for($u, 'SHOW', 90, 1735689602);
+
+        $grades = array_column(collector::collect($u->id)['courses'], 'grade', 'shortname');
+        $this->assertSame('', $grades['HID1']);
+        $this->assertSame('', $grades['HID2']);
+        $this->assertSame('90.00', $grades['SHOW']);
+    }
 }

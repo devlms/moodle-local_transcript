@@ -47,7 +47,7 @@ class collector {
                 continue;
             }
             $completed = empty($done[$course->id]) ? null : (int) $done[$course->id];
-            $grade = self::grade($course->id, $userid);
+            $grade = self::grade((int) $course->id, $userid);
             if ($completed === null && !($include === 'graded' && $grade !== null)) {
                 continue;
             }
@@ -78,10 +78,15 @@ class collector {
      * @return string|null
      */
     private static function grade(int $courseid, int $userid): ?string {
-        grade_regrade_final_grades_if_required(get_course($courseid));
+        $course = get_course($courseid);
+        // A course that hides grades from students, or a hidden course total, stays off the transcript.
+        if (empty($course->showgrades)) {
+            return null;
+        }
+        grade_regrade_final_grades_if_required($course);
         $item = \grade_item::fetch_course_item($courseid);
         $grade = $item->get_grade($userid, false);
-        if (!$grade || $grade->finalgrade === null) {
+        if (!$grade || $grade->finalgrade === null || $item->is_hidden() || $grade->is_hidden()) {
             return null;
         }
         return grade_format_gradevalue($grade->finalgrade, $item, true);

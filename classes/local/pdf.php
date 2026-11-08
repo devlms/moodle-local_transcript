@@ -45,9 +45,9 @@ class pdf {
         $doc->SetMargins(18, 18, 18);
         $doc->AddPage();
 
-        $doc->SetFont('helvetica', 'B', 16);
+        $doc->SetFont('freesans', 'B', 16);
         $doc->Cell(0, 9, $data['institution'], 0, 1);
-        $doc->SetFont('helvetica', '', 11);
+        $doc->SetFont('freesans', '', 11);
         $doc->Cell(0, 6, get_string('transcriptfor', 'local_transcript', $data['student']['fullname']), 0, 1);
         if ($data['student']['idnumber'] !== '') {
             $doc->Cell(0, 6, get_string('studentid', 'local_transcript') . ': ' . $data['student']['idnumber'], 0, 1);
@@ -70,16 +70,16 @@ class pdf {
             . s(get_string('course', 'local_transcript')) . '</b></th>'
             . ($grades ? '<th width="15%"><b>' . s(get_string('grade', 'local_transcript')) . '</b></th>' : '')
             . '<th width="25%"><b>' . s(get_string('completed', 'local_transcript')) . '</b></th></tr>';
-        $doc->SetFont('helvetica', '', 10);
+        $doc->SetFont('freesans', '', 10);
         $doc->writeHTML('<table cellpadding="4" border="0.2">' . $head . $rows . '</table>', true, false, true);
 
         $doc->Ln(8);
         $y = $doc->GetY();
         $doc->write2DBarcode($url, 'QRCODE,M', 18, $y, 32, 32);
         $doc->SetXY(56, $y + 4);
-        $doc->SetFont('helvetica', 'B', 12);
+        $doc->SetFont('freesans', 'B', 12);
         $doc->Cell(0, 7, get_string('code', 'local_transcript') . ': ' . $record->code, 0, 2);
-        $doc->SetFont('helvetica', '', 9);
+        $doc->SetFont('freesans', '', 9);
         $doc->MultiCell(0, 5, get_string('scan', 'local_transcript') . ' ' . $url, 0, 'L', false, 1, 56);
         return $doc->Output('', 'S');
     }

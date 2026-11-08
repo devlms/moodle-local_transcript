@@ -23,6 +23,7 @@
  */
 
 use local_transcript\local\pdf;
+use local_transcript\local\registry;
 
 require_once(__DIR__ . '/../../config.php');
 
@@ -33,4 +34,8 @@ $sys = context_system::instance();
 require_capability($record->userid == $USER->id && !has_capability('local/transcript:manage', $sys)
     ? 'local/transcript:issueown' : 'local/transcript:manage', $sys);
 
+// A revoked or altered transcript is not handed out as a clean PDF.
+if (registry::verify($record->code)->status !== registry::VALID) {
+    throw new moodle_exception('error:notvalid', 'local_transcript');
+}
 pdf::send($record);

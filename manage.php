@@ -41,7 +41,7 @@ if ($q !== '') {
     $where = $code ? 't.code = :code' : $like;
     $params = $code ? ['code' => $code] : ['name' => '%' . $DB->sql_like_escape($q) . '%'];
 }
-$from = "FROM {local_transcript} t JOIN {user} u ON u.id = t.userid WHERE $where";
+$from = "FROM {local_transcript} t JOIN {user} u ON u.id = t.userid AND u.deleted = 0 WHERE $where";
 $total = $DB->count_records_sql("SELECT COUNT(1) $from", $params);
 $rows = $DB->get_records_sql(
     "SELECT t.*, $userfields $from ORDER BY t.timecreated DESC, t.id DESC",

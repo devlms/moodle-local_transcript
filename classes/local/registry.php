@@ -41,13 +41,24 @@ class registry {
     private const ALPHABET = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
 
     /**
-     * The site's signing secret, created the first time it is needed.
+     * The site's signing secret.
+     *
+     * $CFG->local_transcript_secret in config.php wins, so the secret can live outside the database.
+     * Otherwise it is created in the plugin config the first time it is needed. Once transcripts exist a
+     * missing secret is an error, never a new secret: a new one would mark every transcript as altered.
      *
      * @return string
      */
     public static function secret(): string {
+        global $CFG, $DB;
+        if (!empty($CFG->local_transcript_secret) && strlen((string) $CFG->local_transcript_secret) >= 32) {
+            return (string) $CFG->local_transcript_secret;
+        }
         $secret = (string) get_config('local_transcript', 'secret');
         if (strlen($secret) < 32) {
+            if ($DB->record_exists('local_transcript', [])) {
+                throw new \moodle_exception('error:nosecret', 'local_transcript');
+            }
             $secret = bin2hex(random_bytes(32));
             set_config('secret', $secret, 'local_transcript');
         }
@@ -95,7 +106,10 @@ class registry {
         if (!hash_equals(self::sign($record), (string) $record->signature)) {
             return (object) ['status' => self::ALTERED, 'record' => $record, 'data' => null];
         }
-        $status = $record->timerevoked ? self::REVOKED : self::VALID;
+        // A transcript of a deleted account no longer stands, whatever the record says.
+        $deleted = (int) $DB->get_field('user', 'deleted', ['id' => $record->userid]) !== 0
+            || !$DB->record_exists('user', ['id' => $record->userid]);
+        $status = $record->timerevoked || $deleted ? self::REVOKED : self::VALID;
         return (object) ['status' => $status, 'record' => $record, 'data' => json_decode($record->payload, true)];
     }
 
@@ -119,6 +133,22 @@ class registry {
             'context' => \context_system::instance(),
             'other' => ['reason' => trim($reason)],
         ])->trigger();
+    }
+
+    /**
+     * Revoke every transcript of a user whose account was deleted.
+     *
+     * @param int $userid
+     */
+    public static function revoke_all_for_user(int $userid): void {
+        global $DB;
+        $DB->set_field_select(
+            'local_transcript',
+            'timerevoked',
+            time(),
+            'userid = :userid AND (timerevoked IS NULL OR timerevoked = 0)',
+            ['userid' => $userid]
+        );
     }
 
     /**

@@ -73,7 +73,8 @@ if ($code !== '') {
             $type = 'warning';
     }
     echo $OUTPUT->notification(html_writer::tag('strong', $title) . ' ' . $msg, $type, false);
-    if ($v->data) {
+    // Revoked or altered transcripts show their status only, never the contents.
+    if ($v->status === registry::VALID) {
         echo $OUTPUT->render_from_template(
             'local_transcript/transcript',
             transcript::context($v->data, $v->record->code, (int) $v->record->timecreated)

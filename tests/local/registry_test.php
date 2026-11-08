@@ -109,4 +109,38 @@ final class registry_test extends \advanced_testcase {
 
         $this->assertSame(registry::ALTERED, registry::verify($t->code)->status);
     }
+
+    public function test_deleting_the_account_revokes_its_transcripts(): void {
+        $this->resetAfterTest();
+        $u = $this->student();
+        $t = registry::issue($u->id);
+        $this->setAdminUser();
+        delete_user($u);
+        $v = registry::verify($t->code);
+        $this->assertSame(registry::REVOKED, $v->status);
+        $this->assertNotEmpty($v->record->timerevoked);
+    }
+
+    public function test_a_missing_secret_is_an_error_once_transcripts_exist(): void {
+        $this->resetAfterTest();
+        $u = $this->student();
+        $t = registry::issue($u->id);
+        unset_config('secret', 'local_transcript');
+        $this->expectException(\moodle_exception::class);
+        registry::verify($t->code);
+    }
+
+    public function test_the_secret_in_config_php_wins(): void {
+        global $CFG;
+        $this->resetAfterTest();
+        $CFG->local_transcript_secret = str_repeat('k', 40);
+        $u = $this->student();
+        $t = registry::issue($u->id);
+        $this->assertSame(registry::VALID, registry::verify($t->code)->status);
+        // The database copy does not matter while config.php has one.
+        set_config('secret', str_repeat('x', 64), 'local_transcript');
+        $this->assertSame(registry::VALID, registry::verify($t->code)->status);
+        unset($CFG->local_transcript_secret);
+        $this->assertSame(registry::ALTERED, registry::verify($t->code)->status);
+    }
 }

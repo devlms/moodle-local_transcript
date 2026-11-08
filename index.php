@@ -44,7 +44,8 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('transcriptfor', 'local_transcript', fullname($user)));
 $PAGE->set_heading(get_string('transcriptfor', 'local_transcript', fullname($user)));
 
-if (optional_param('issue', 0, PARAM_BOOL) && confirm_sesskey()) {
+if (optional_param('issue', 0, PARAM_BOOL)) {
+    require_sesskey();
     $t = registry::issue($userid);
     redirect($url, get_string('issued', 'local_transcript', $t->code), null, \core\output\notification::NOTIFY_SUCCESS);
 }
