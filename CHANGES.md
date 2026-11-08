@@ -1,5 +1,12 @@
 # Changes
 
+## 1.1.0 (2026-11-08)
+
+Redesigned pages, same features.
+
+- The verify page shows the transcript as a document: the verdict and a seal first, the institution as letterhead, the student's name, the code spaced for reading aloud, and grades in an aligned column.
+- Revoked, altered and unknown codes show the verdict only.
+
 ## 1.0.0 (2026-11-08)
 
 First stable release.
