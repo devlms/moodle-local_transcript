@@ -7,6 +7,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.1%20to%208.4-777bb4)](https://www.php.net/supported-versions.php)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue)](LICENSE)
 [![Maturity](https://img.shields.io/badge/maturity-stable-green)](version.php)
+[![Sponsor](https://img.shields.io/badge/sponsor-this%20plugin-2438ff)](https://devlms.com/sponsors/?plugin=local_transcript)
 
 A student issues a transcript of the courses they completed, with final grades and completion dates. It gets a code like `K7QM-4XRT-9HCP` and a PDF with a QR code. An employer or another school types the code (or scans it) on a public page, without an account, and sees exactly what was issued and whether it is still valid.
 
@@ -76,6 +77,12 @@ PHPUnit covers which courses go on a transcript (completed, graded, hidden, othe
 ## Who made it
 
 [DevLMS](https://devlms.com) builds custom Moodle plugins. Need your logo and signatures on it, credits and GPA, or a link to your student records system? [Get a quote](https://devlms.com/#quote).
+
+## Sponsors
+
+<!-- sponsors:start -->
+No sponsors yet. [Sponsor this plugin](https://devlms.com/sponsors/?plugin=local_transcript): your name or logo, with a link to your site, goes here and on [devlms.com/sponsors](https://devlms.com/sponsors/).
+<!-- sponsors:end -->
 
 ## License
 
